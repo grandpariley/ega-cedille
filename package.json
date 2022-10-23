@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/server.js",
-    "build": "npm build",
     "migrate": "npx prisma migrate dev --preview-feature --skip-generate"
   },
   "repository": {

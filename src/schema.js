@@ -2,7 +2,7 @@ const { gql } = require('apollo-server')
 const { v4: uuidv4 } = require('uuid')
 const { prisma } = require('./db')
 const { authenticate } = require('./auth')
-const { GraphQLError, GraphQLScalarType, Kind } = require('graphql')
+const { GraphQLError } = require('graphql')
 
 const typeDefs = gql`
   type Cedille {
