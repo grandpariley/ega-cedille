@@ -37,8 +37,8 @@ const resolvers = {
     },
     Mutation: {
         create: (_, args) => {
-            claims = authenticate(args.token);
-            if (!claims) {
+            user = authenticate(args.token);
+            if (!user) {
                 throw new GraphQLError('You are not authorized to perform this action.', {
                     extensions: {
                         code: 'UNAUTHORIZED',
@@ -50,7 +50,7 @@ const resolvers = {
                     id: uuidv4(),
                     parent: args.parent,
                     content: args.content,
-                    user: claims.user,
+                    user,
                     time: new Date()
                 }
             });
