@@ -1,0 +1,30 @@
+{
+  "name": "ega-cedille",
+  "version": "1.0.0",
+  "description": "the place where posts are made for ega",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "build": "npm build",
+    "migrate": "npx prisma migrate dev --preview-feature --skip-generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grandpariley/ega-cedille.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grandpariley/ega-cedille/issues"
+  },
+  "homepage": "https://github.com/grandpariley/ega-cedille#readme",
+  "dependencies": {
+    "apollo-server": "^3.10.3",
+    "graphql": "^16.6.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^4.5.0"
+  }
+}
