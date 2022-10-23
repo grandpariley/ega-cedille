@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server')
 const { v4: uuidv4 } = require('uuid')
 const { prisma } = require('./db')
+const { authenticate } = require('./auth')
+const { GraphQLError, GraphQLScalarType, Kind } = require('graphql')
 
 const typeDefs = gql`
   type Cedille {
@@ -8,6 +10,7 @@ const typeDefs = gql`
     id: ID!
     parent: ID
     content: String
+    time: String!
   }
 
   type Query {
@@ -15,7 +18,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    create(content: String, parent: String): Cedille!
+    create(token: String!, content: String, parent: String): Cedille!
   }
 `
 
@@ -34,21 +37,31 @@ const resolvers = {
     },
     Mutation: {
         create: (_, args) => {
+            claims = authenticate(args.token);
+            if (!claims) {
+                throw new GraphQLError('You are not authorized to perform this action.', {
+                    extensions: {
+                        code: 'UNAUTHORIZED',
+                    },
+                });
+            }
             return prisma.cedille.create({
                 data: {
                     id: uuidv4(),
                     parent: args.parent,
                     content: args.content,
-                    user: uuidv4() //FIXME - RH - get current user
+                    user: claims.user,
+                    time: new Date()
                 }
-            })
+            });
         }
     },
     Cedille: {
         id: (parent) => parent.id,
         parent: (parent) => parent.parent,
         content: (parent) => parent.content,
-        user: (parent) => parent.user
+        user: (parent) => parent.user,
+        time: (parent) => parent.time
     },
 }
 

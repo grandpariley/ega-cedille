@@ -11,8 +11,9 @@ datasource db {
 }
 
 model cedille {
-  id        String  @id
-  user      String
-  parent    String?
-  content   String?
+  id      String   @id
+  user    String
+  parent  String?
+  content String?
+  time    DateTime
 }
